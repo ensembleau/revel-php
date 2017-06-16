@@ -38,15 +38,15 @@ abstract class Api {
 	 * @param string $resource The API endpoint, relative to the domain.
 	 * @param array $body The request body.
 	 *
-	 * @return ResponseInterface
+	 * @return Response
 	 */
 	protected function call($method, $resource, array $body = []) {
-		return $this->revel->guzzle()->request($method, $this->buildApiUrl($resource), [
+		return new Response($this->revel->guzzle()->request($method, $this->buildApiUrl($resource), [
 			'headers' => [
 				'API-AUTHENTICATION' => $this->revel->auth()
 			],
 			'json' => $body
-		]);
+		]));
 	}
 
 	/**

@@ -1,13 +1,14 @@
 <?php namespace Revel\Api;
 
+use Revel\Models\Establishment;
+
 class Establishments extends Api {
 
 	public function all() {
 		return $this->cache('all', function() {
-			$data = $this->call('GET', '/enterprise/Establishment');
+			$response = $this->call('GET', '/enterprise/Establishment');
 
-			if (!empty($data)) return RevelEstablishmentModel::createMany($data->objects);
-			return array();
+			return Establishment::many($response->objects());
 		});
 	}
 

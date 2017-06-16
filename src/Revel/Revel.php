@@ -20,7 +20,7 @@ class Revel {
 	private $_client;
 
 	/** @var Api[] */
-	private $_providers;
+	private $_providers = [];
 
 	/**
 	 * Revel constructor.
