@@ -43,11 +43,7 @@ abstract class Model implements JsonSerializable {
 	 */
 	public function __construct($data) {
 		$this->_raw = $data;
-
-		foreach ($this->fields() as $local => $foreign) {
-			if (is_array($data) && array_key_exists($foreign, $data)) $this->_data[$local] = $data[$foreign];
-			else if (is_object($data) && property_exists($data, $foreign)) $this->_data[$local] = $data->{$foreign};
-		}
+		$this->_data = $this->fields($data);
 	}
 
 	public function __get($prop) {
@@ -67,7 +63,10 @@ abstract class Model implements JsonSerializable {
 	 * @return mixed
 	 */
 	public function raw($field, $fallback = null) {
-		return array_key_exists($field, $this->_raw) ? $this->_raw[$field] : $fallback;
+		if (is_array($this->_raw) && array_key_exists($field, $this->_raw)) return $this->_raw[$field];
+		else if (is_object($this->_raw) && property_exists($this->_raw, $field)) return $this->_raw->{$field};
+
+		return $fallback;
 	}
 
 	public function jsonSerialize() {
@@ -76,5 +75,12 @@ abstract class Model implements JsonSerializable {
 
 	/** @return array */
 	abstract protected function fields();
+
+	/**
+	 * @return array
+	 */
+	public function data() {
+		return $this->_data;
+	}
 
 }

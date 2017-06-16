@@ -16,12 +16,12 @@ class Establishment extends Model {
 
 	protected function fields() {
 		return [
-			'id' => 'id',
-			'title' => 'about_title',
-			'name' => 'name',
-			'email' => 'email',
-			'phone' => 'phone',
-			'active' => 'active'
+			'id' => $this->raw('id'),
+			'title' => $this->raw('about_title'),
+			'name' => $this->raw('name'),
+			'email' => $this->raw('email'),
+			'phone' => $this->raw('phone'),
+			'active' => $this->raw('active')
 		];
 	}
 

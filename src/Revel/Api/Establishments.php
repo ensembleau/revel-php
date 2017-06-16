@@ -1,6 +1,7 @@
 <?php namespace Revel\Api;
 
 use Revel\Models\Establishment;
+use Revel\Utils;
 
 /**
  * API wrapper that deals with {@link Establishment establishments}.
@@ -15,24 +16,20 @@ class Establishments extends Api {
 	 * @return Establishment[]
 	 */
 	public function all() {
-		return $this->cache('all', Establishment::many($this->call('GET', '/enterprise/Establishment?limit=1000')->objects()));
+		return $this->cache('all', Establishment::many($this->get('/enterprise/Establishment?limit=1000')->objects()));
 	}
 
 	/**
 	 * Find one establishment using its ID.
 	 *
-	 * @param int $id The establishment ID.
+	 * @param int|string $id The establishment ID or resource URL.
 	 *
 	 * @return Establishment
 	 */
 	public function findById($id) {
-		foreach ($this->all() as $establishment) {
-			if ($establishment->id === $id) {
-				return $establishment;
-			}
-		}
+		$id = Utils::extractId($id);
 
-		return null;
+		return $this->cache('findById' . $id, Establishment::one($this->get('/enterprise/Establishment/' . $id)->data()));
 	}
 
 }

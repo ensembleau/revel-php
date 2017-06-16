@@ -1,5 +1,6 @@
 <?php namespace Revel\Api;
 
+use Revel\Utils;
 use Revel\Models\Product;
 
 class Products extends Api {
@@ -10,7 +11,20 @@ class Products extends Api {
 	 * @return Product[]
 	 */
 	public function all() {
-		return $this->cache('all', Product::many($this->call('GET', '/resources/Product?limit=1000')));
+		return $this->cache('all', Product::many($this->get('/resources/Product?limit=1000')->objects()));
+	}
+
+	/**
+	 * Get a single product.
+	 *
+	 * @param int|string The product ID or resource URL.
+	 *
+	 * @return Product
+	 */
+	public function findById($id) {
+		$id = Utils::extractId($id);
+
+		return $this->cache('findById' . $id, Product::one($this->get('/resources/Product/' . $id)->data()));
 	}
 
 }

@@ -12,4 +12,7 @@ $env->load();
 
 $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 
-echo json_encode($revel->establishments()->findById(2));
+$product = $revel->products()->findById(1);
+$establishment = $revel->establishments()->findById($product->establishmentId);
+
+print_r($establishment->data());
