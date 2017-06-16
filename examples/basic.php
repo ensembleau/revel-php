@@ -12,6 +12,4 @@ $env->load();
 
 $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 
-echo getenv('domain');
-
-print_r($revel->establishments()->all());
+echo json_encode($revel->establishments()->findById(2));

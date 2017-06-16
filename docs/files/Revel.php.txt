@@ -1,7 +1,9 @@
 <?php namespace Revel;
 
+use Revel\Api\Api;
 use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
+use Revel\Api\Establishments;
+use Revel\Api\Products;
 
 class Revel {
 
@@ -17,6 +19,9 @@ class Revel {
 	/** @var Client */
 	private $_client;
 
+	/** @var Api[] */
+	private $_providers = [];
+
 	/**
 	 * Revel constructor.
 	 *
@@ -25,11 +30,34 @@ class Revel {
 	 * @param string $key The Revel API key, provided by Revel.
 	 */
 	public function __construct($domain, $secret, $key) {
+		$this->_client = new Client();
 		$this->_domain = $domain;
 		$this->_secret = $secret;
 		$this->_key = $key;
+	}
 
-		$this->_client = new Client();
+	/**
+	 * Get an API provider.
+	 *
+	 * @param string $name The API provider name.
+	 *
+	 * @return Api|mixed
+	 */
+	private function _provider($name) {
+		if (!array_key_exists($name, $this->_providers)) {
+			$this->_providers[$name] = new $name($this);
+		}
+
+		return $this->_providers[$name];
+	}
+
+	/**
+	 * Get the Guzzle client.
+	 *
+	 * @return Client
+	 */
+	public function guzzle() {
+		return $this->_client;
 	}
 
 	/**
@@ -37,7 +65,7 @@ class Revel {
 	 *
 	 * @return string
 	 */
-	public function getAuth() {
+	public function auth() {
 		return $this->_key . ':' . $this->_secret;
 	}
 
@@ -46,37 +74,22 @@ class Revel {
 	 *
 	 * @return string
 	 */
-	public function getFullUrl() {
+	public function fullUrl() {
 		return 'https://' . $this->_domain . '.revelup.com';
 	}
 
 	/**
-	 * Builds an API URL relative to {@link getFullUrl()}.
-	 *
-	 * @param string $resource The resource relative to {@link getFullUrl()}.
-	 *
-	 * @return string
+	 * @return Products
 	 */
-	public function buildApiUrl($resource) {
-		return $this->getFullUrl() . '/' . ltrim($resource, '/');
+	public function products() {
+		return $this->_provider(Products::class);
 	}
 
 	/**
-	 * Perform a Revel API request.
-	 *
-	 * @param string $method The HTTP method.
-	 * @param string $resource The API endpoint, relative to the domain.
-	 * @param array $body The request body.
-	 *
-	 * @return ResponseInterface
+	 * @return Establishments
 	 */
-	public function api($method, $resource, array $body = array()) {
-		return $this->_client->request($method, $this->buildApiUrl($resource), [
-			'headers' => array(
-				'API-AUTHENTICATION' => $this->getAuth()
-			),
-			'json' => $body
-		]);
+	public function establishments() {
+		return $this->_provider(Establishments::class);
 	}
 
 }
