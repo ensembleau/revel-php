@@ -32,4 +32,13 @@ class RevelTest extends TestCase {
 		$this->assertEquals($revel->auth(), getenv('key') . ':' . getenv('secret'));
 	}
 
+	/**
+	 * @depends revel
+	 */
+	public function testFindEstablishmentById(Revel $revel) {
+		$establishment = $revel->establishments()->findById(1);
+
+		$this->assertEquals($establishment->id, 1);
+	}
+
 }
