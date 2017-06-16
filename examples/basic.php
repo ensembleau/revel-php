@@ -15,4 +15,4 @@ $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 $product = $revel->products()->findById(1);
 $establishment = $revel->establishments()->findById($product->establishmentId);
 
-print_r($establishment->data());
+print_r($product->establishment()->data());

@@ -50,4 +50,14 @@ class RevelTest extends TestCase {
 		$this->assertEquals($product->id, 1);
 	}
 
+	/**
+	 * @depends revel
+	 */
+	public function testGetRelatedEstablishmentFromProduct(Revel $revel) {
+		$product = $revel->products()->findById(1);
+		$establishment = $product->establishment();
+
+		$this->assertEquals($product->establishmentId, $establishment->id);
+	}
+
 }

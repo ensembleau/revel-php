@@ -27,4 +27,11 @@ class Product extends Model {
 		];
 	}
 
+	/**
+	 * @return Establishment
+	 */
+	public function establishment() {
+		return $this->revel->establishments()->findById($this->establishmentId);
+	}
+
 }

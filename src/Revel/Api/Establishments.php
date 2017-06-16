@@ -16,7 +16,7 @@ class Establishments extends Api {
 	 * @return Establishment[]
 	 */
 	public function all() {
-		return $this->cache('all', Establishment::many($this->get('/enterprise/Establishment?limit=1000')->objects()));
+		return $this->cache('all', Establishment::many($this->revel, $this->get('/enterprise/Establishment?limit=1000')->objects()));
 	}
 
 	/**
@@ -29,7 +29,7 @@ class Establishments extends Api {
 	public function findById($id) {
 		$id = Utils::extractId($id);
 
-		return $this->cache('findById' . $id, Establishment::one($this->get('/enterprise/Establishment/' . $id)->data()));
+		return $this->cache('findById' . $id, Establishment::one($this->revel, $this->get('/enterprise/Establishment/' . $id)->data()));
 	}
 
 }

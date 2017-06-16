@@ -11,7 +11,7 @@ class Products extends Api {
 	 * @return Product[]
 	 */
 	public function all() {
-		return $this->cache('all', Product::many($this->get('/resources/Product?limit=1000')->objects()));
+		return $this->cache('all', Product::many($this->revel, $this->get('/resources/Product?limit=1000')->objects()));
 	}
 
 	/**
@@ -24,7 +24,7 @@ class Products extends Api {
 	public function findById($id) {
 		$id = Utils::extractId($id);
 
-		return $this->cache('findById' . $id, Product::one($this->get('/resources/Product/' . $id)->data()));
+		return $this->cache('findById' . $id, Product::one($this->revel, $this->get('/resources/Product/' . $id)->data()));
 	}
 
 }
