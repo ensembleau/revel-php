@@ -26,7 +26,7 @@ abstract class Api {
 	 *
 	 * @return string
 	 */
-	protected function buildApiUrl($resource) {
+	public function buildApiUrl($resource) {
 		return $this->revel->fullUrl() . '/' . ltrim($resource, '/');
 	}
 
@@ -49,6 +49,29 @@ abstract class Api {
 	}
 
 	/**
+	 * GET resource data.
+	 *
+	 * @param string $resource The API endpoint, relative to the domain.
+	 *
+	 * @return Response
+	 */
+	public function get($resource) {
+		return $this->call('GET', $resource);
+	}
+
+	/**
+	 * POST to a resource.
+	 *
+	 * @param string $resource The API endpoint, relative to the domain.
+	 * @param array $body The POST body.
+	 *
+	 * @return Response
+	 */
+	public function post($resource, array $body = []) {
+		return $this->call('POST', $resource, $body);
+	}
+
+	/**
 	 * Cache the result of the API call for future access.
 	 *
 	 * @param string $key Unique key.
@@ -56,7 +79,7 @@ abstract class Api {
 	 *
 	 * @return mixed
 	 */
-	public function cache($key, $value) {
+	protected function cache($key, $value) {
 		if (!array_key_exists($key, $this->_cache)) {
 			$this->_cache[$key] = is_callable($value) ? $value() : $value;
 		}

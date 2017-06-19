@@ -5,7 +5,7 @@ use Revel\Enums\DiningOptions;
 
 /**
  * @property DateTime $created
- * @property int $diningOptions
+ * @property int $diningOption
  * @property bool $asap
  * @property-read Customer $customer
  *
@@ -17,7 +17,7 @@ class OrderInfo extends SendableModel {
 	protected function fields() {
 		return [
 			'created' => $this->raw('created', new DateTime()),
-			'diningOptions' => $this->raw('diningOptions', DiningOptions::ONLINE),
+			'diningOption' => $this->raw('diningOption', DiningOptions::ONLINE),
 			'asap' => $this->raw('asap', false),
 			'customer' => $this->raw('customer', Customer::one($this->revel))
 		];
@@ -26,7 +26,7 @@ class OrderInfo extends SendableModel {
 	public function bundle() {
 		return [
 			'created_date' => $this->created->format('Y-m-d H:i:s'),
-			'dining_options' => $this->diningOptions,
+			'dining_option' => $this->diningOption,
 			'asap' => $this->asap,
 			'customer' => $this->customer->bundle()
 		];
