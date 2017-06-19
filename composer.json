@@ -1,6 +1,6 @@
 {
 	"name": "ensembleau/revel-php",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "An SDK for communicating with the Revel Systems API.",
 	"homepage": "https://github.com/ensembleau/revel-php",
 	"type": "library",

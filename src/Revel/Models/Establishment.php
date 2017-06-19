@@ -25,4 +25,22 @@ class Establishment extends Model {
 		];
 	}
 
+	/**
+	 * @return Category[]
+	 */
+	public function categories() {
+		return array_values(array_filter($this->revel->categories()->all(), function(Category $category) {
+			return $category->establishment()->id === $this->id;
+		}));
+	}
+
+	/**
+	 * @return Product[]
+	 */
+	public function products() {
+		return array_values(array_filter($this->revel->products()->all(), function(Product $product) {
+			return $product->establishment()->id === $this->id;
+		}));
+	}
+
 }

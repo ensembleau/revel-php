@@ -94,4 +94,32 @@ class RevelTest extends TestCase {
 		$this->assertEquals($order->orderInfo->diningOption, DiningOptions::ONLINE);
 	}
 
+	/**
+	 * @depends testRevel
+	 * @param Revel $revel
+	 */
+	public function testProductsFindByBarcode(Revel $revel) {
+		$this->assertEquals($revel->products()->findByBarcode('10001')->barcode, '10001');
+	}
+
+	/**
+	 * @depends testRevel
+	 * @param Revel $revel
+	 */
+	public function testProductsFindByUUID(Revel $revel) {
+		$this->assertEquals($revel->products()->findByUUID('fcc5df58-a5f4-4808-b233-561f33d4d157')->uuid, 'fcc5df58-a5f4-4808-b233-561f33d4d157');
+	}
+
+	/**
+	 * @depends testRevel
+	 * @param Revel $revel
+	 */
+	public function testProductBelongsToValidCategory(Revel $revel) {
+		$product = $revel->products()->findById(85);
+		$category = $revel->categories()->findById(14);
+
+		$this->assertEquals($product->category()->id, 14);
+		$this->assertEquals($product->category()->name, $category->name);
+	}
+
 }

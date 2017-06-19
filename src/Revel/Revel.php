@@ -1,7 +1,8 @@
 <?php namespace Revel;
 
-use Revel\Api\Api;
 use GuzzleHttp\Client;
+use Revel\Api\Api;
+use Revel\Api\Categories;
 use Revel\Api\Establishments;
 use Revel\Api\Ordering;
 use Revel\Api\Products;
@@ -77,6 +78,13 @@ class Revel {
 	 */
 	public function fullUrl() {
 		return 'https://' . $this->_domain . '.revelup.com';
+	}
+
+	/**
+	 * @return Categories
+	 */
+	public function categories() {
+		return $this->_provider(Categories::class);
 	}
 
 	/**

@@ -11,6 +11,8 @@ use Revel\Models\OrderItem;
 use Revel\Models\PaymentInfo;
 use Revel\Models\OrderInfo;
 use Revel\Models\Customer;
+use Revel\Models\Category;
+use Revel\Models\Product;
 
 $env = new Dotenv(realpath(__DIR__ . '/../'));
 $env->load();
@@ -36,8 +38,4 @@ $order = Order::one($revel, [
 	])
 ]);
 
-try {
-	$revel->ordering()->submit($order);
-} catch (Exception $exception) {
-	echo $exception->getMessage();
-}
+print_r($revel->products()->findById(85)->category()->id);
