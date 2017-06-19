@@ -4,6 +4,10 @@
 
 A PHP SDK for interacting with the Revel Systems API.
 
+## installation.
+
+    $ composer require ensembleau/revel-php
+
 ## usage:
 
 Create a new `Revel` instance:
@@ -12,5 +16,14 @@ Create a new `Revel` instance:
 
 Access various API endpoints through this instance, e.g.
 
+    // Get all products.
     $products = $revel->products()->all();
+    
+    // Get an establishment.
     $establishment = $revel->establishments()->findById(1);
+    
+    // Submit an online order.
+    $revel->ordering()->submit(Order::one($revel, [
+        // Order content.
+        // ...
+    ]));
