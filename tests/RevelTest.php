@@ -91,7 +91,7 @@ class RevelTest extends TestCase {
 	public function testDefaultOrder(Revel $revel, Order $order) {
 		$this->assertEquals($order->items, []);
 		$this->assertEquals($order->establishmentId, null);
-		$this->assertEquals($order->orderInfo->diningOptions, DiningOptions::ONLINE);
+		$this->assertEquals($order->orderInfo->diningOption, DiningOptions::ONLINE);
 	}
 
 }
