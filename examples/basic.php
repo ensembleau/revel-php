@@ -38,4 +38,6 @@ $order = Order::one($revel, [
 	])
 ]);
 
-print_r($revel->products()->findById(85)->category()->id);
+print_r(array_map(function(Product $product) {
+	return $product->raw();
+}, $revel->products()->all()));

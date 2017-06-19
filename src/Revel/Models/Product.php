@@ -11,7 +11,7 @@ use Revel\Utils;
  * @property-read string $barcode
  * @property-read int $establishmentId
  * @property-read int $categoryId
- * @property-read bool $available
+ * @property-read bool $active
  *
  * @author Marty Wallace
  */
@@ -25,7 +25,7 @@ class Product extends Model {
 			'barcode' => $this->raw('barcode'),
 			'establishmentId' => Utils::extractId($this->raw('establishment')),
 			'categoryId' => Utils::extractId($this->raw('category')),
-			'available' => $this->raw('available')
+			'active' => $this->raw('active', false)
 		];
 	}
 

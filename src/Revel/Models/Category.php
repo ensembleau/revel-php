@@ -1,4 +1,5 @@
 <?php namespace Revel\Models;
+use Revel\Utils;
 
 /**
  * @property-read int $id
@@ -12,8 +13,8 @@ class Category extends Model {
 		return [
 			'id' => $this->raw('id'),
 			'name' => $this->raw('name'),
-			'active' => $this->raw('active'),
-			'establishmentId' => $this->raw('establishment')
+			'active' => $this->raw('active', false),
+			'establishmentId' => Utils::extractId($this->raw('establishment'))
 		];
 	}
 

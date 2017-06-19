@@ -21,7 +21,7 @@ class Establishment extends Model {
 			'name' => $this->raw('name'),
 			'email' => $this->raw('email'),
 			'phone' => $this->raw('phone'),
-			'active' => $this->raw('active')
+			'active' => $this->raw('active', false)
 		];
 	}
 
