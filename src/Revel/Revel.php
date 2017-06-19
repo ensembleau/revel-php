@@ -3,6 +3,7 @@
 use Revel\Api\Api;
 use GuzzleHttp\Client;
 use Revel\Api\Establishments;
+use Revel\Api\Ordering;
 use Revel\Api\Products;
 
 class Revel {
@@ -90,6 +91,13 @@ class Revel {
 	 */
 	public function establishments() {
 		return $this->_provider(Establishments::class);
+	}
+
+	/**
+	 * @return Ordering
+	 */
+	public function ordering() {
+		return $this->_provider(Ordering::class);
 	}
 
 }

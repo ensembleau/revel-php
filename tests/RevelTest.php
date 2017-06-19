@@ -4,6 +4,9 @@ require(realpath(__DIR__ . '/../vendor/autoload.php'));
 
 use PHPUnit\Framework\TestCase;
 use Revel\Revel;
+use Revel\Models\Order;
+use Revel\Models\OrderItem;
+use Revel\Enums\DiningOptions;
 use Dotenv\Dotenv;
 
 try {
@@ -14,26 +17,42 @@ try {
 
 class RevelTest extends TestCase {
 
-	public function revel() {
+	/**
+	 * @return Revel
+	 */
+	public function testRevel() {
 		return new Revel(getenv('DOMAIN'), getenv('SECRET'), getenv('KEY'));
 	}
 
 	/**
-	 * @depends revel
+	 * @depends testRevel
+	 * @param Revel $revel
+	 *
+	 * @return Order
+	 */
+	public function testOrder(Revel $revel) {
+		return Order::one($revel);
+	}
+
+	/**
+	 * @depends testRevel
+	 * @param Revel $revel
 	 */
 	public function testFullUrl(Revel $revel) {
 		$this->assertEquals($revel->fullUrl(), 'https://' . getenv('domain') . '.revelup.com');
 	}
 
 	/**
-	 * @depends revel
+	 * @depends testRevel
+	 * @param Revel $revel
 	 */
 	public function testAuth(Revel $revel) {
 		$this->assertEquals($revel->auth(), getenv('key') . ':' . getenv('secret'));
 	}
 
 	/**
-	 * @depends revel
+	 * @depends testRevel
+	 * @param Revel $revel
 	 */
 	public function testFindEstablishmentById(Revel $revel) {
 		$establishment = $revel->establishments()->findById(1);
@@ -42,7 +61,8 @@ class RevelTest extends TestCase {
 	}
 
 	/**
-	 * @depends revel
+	 * @depends testRevel
+	 * @param Revel $revel
 	 */
 	public function testFindProduct(Revel $revel) {
 		$product = $revel->products()->findById(1);
@@ -51,13 +71,27 @@ class RevelTest extends TestCase {
 	}
 
 	/**
-	 * @depends revel
+	 * @depends testRevel
+	 * @param Revel $revel
 	 */
 	public function testGetRelatedEstablishmentFromProduct(Revel $revel) {
 		$product = $revel->products()->findById(1);
 		$establishment = $product->establishment();
 
 		$this->assertEquals($product->establishmentId, $establishment->id);
+	}
+
+	/**
+	 * @depends testRevel
+	 * @depends testOrder
+	 *
+	 * @param Revel $revel
+	 * @param Order $order
+	 */
+	public function testDefaultOrder(Revel $revel, Order $order) {
+		$this->assertEquals($order->items, []);
+		$this->assertEquals($order->establishmentId, null);
+		$this->assertEquals($order->orderInfo->diningOptions, DiningOptions::ONLINE);
 	}
 
 }

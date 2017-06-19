@@ -1,5 +1,6 @@
 <?php namespace Revel\Models;
 
+use Exception;
 use JsonSerializable;
 use Revel\Revel;
 
@@ -13,7 +14,7 @@ abstract class Model implements JsonSerializable {
 	 *
 	 * @return static
 	 */
-	public static function one(Revel $revel, $data) {
+	public static function one(Revel $revel, $data = null) {
 		return new static($revel, $data);
 	}
 
@@ -35,10 +36,10 @@ abstract class Model implements JsonSerializable {
 	protected $revel;
 
 	/** @var mixed */
-	private $_raw;
+	protected $raw;
 
 	/** @var array */
-	private $_data;
+	protected $data;
 
 	/**
 	 * Model constructor.
@@ -51,16 +52,28 @@ abstract class Model implements JsonSerializable {
 	 */
 	public function __construct($revel, $data) {
 		$this->revel = $revel;
-		$this->_raw = $data;
-		$this->_data = $this->fields();
+		$this->raw = empty($data) ? [] : $data;
+		$this->data = $this->fields();
 	}
 
 	public function __get($prop) {
-		if (array_key_exists($prop, $this->_data)) {
-			return $this->_data[$prop];
+		if (array_key_exists($prop, $this->data)) {
+			return $this->data[$prop];
 		}
 
 		return null;
+	}
+
+	public function __set($prop, $value) {
+		if (array_key_exists($prop, $this->data)) {
+			$this->data[$prop] = $value;
+		} else {
+			throw new Exception('Unknown field "' . $prop . '" cannot be set.');
+		}
+	}
+
+	public function __isset($prop) {
+		return array_key_exists($prop, $this->data);
 	}
 
 	/**
@@ -71,15 +84,17 @@ abstract class Model implements JsonSerializable {
 	 *
 	 * @return mixed
 	 */
-	public function raw($field, $fallback = null) {
-		if (is_array($this->_raw) && array_key_exists($field, $this->_raw)) return $this->_raw[$field];
-		else if (is_object($this->_raw) && property_exists($this->_raw, $field)) return $this->_raw->{$field};
+	public function raw($field = null, $fallback = null) {
+		if (empty($field)) return $this->raw;
+
+		if (is_array($this->raw) && array_key_exists($field, $this->raw)) return $this->raw[$field];
+		else if (is_object($this->raw) && property_exists($this->raw, $field)) return $this->raw->{$field};
 
 		return $fallback;
 	}
 
 	public function jsonSerialize() {
-		return $this->_data;
+		return $this->data;
 	}
 
 	/** @return array */
@@ -89,7 +104,7 @@ abstract class Model implements JsonSerializable {
 	 * @return array
 	 */
 	public function data() {
-		return $this->_data;
+		return $this->data;
 	}
 
 }
