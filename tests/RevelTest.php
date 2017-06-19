@@ -39,7 +39,7 @@ class RevelTest extends TestCase {
 	 * @param Revel $revel
 	 */
 	public function testFullUrl(Revel $revel) {
-		$this->assertEquals($revel->fullUrl(), 'https://' . getenv('domain') . '.revelup.com');
+		$this->assertEquals($revel->fullUrl(), 'https://' . getenv('DOMAIN') . '.revelup.com');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class RevelTest extends TestCase {
 	 * @param Revel $revel
 	 */
 	public function testAuth(Revel $revel) {
-		$this->assertEquals($revel->auth(), getenv('key') . ':' . getenv('secret'));
+		$this->assertEquals($revel->auth(), getenv('KEY') . ':' . getenv('SECRET'));
 	}
 
 	/**
