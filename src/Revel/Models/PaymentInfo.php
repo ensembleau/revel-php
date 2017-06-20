@@ -17,7 +17,7 @@ class PaymentInfo extends SendableModel {
 
 	public function bundle() {
 		return [
-			'amount' => $this->amount,
+			'amount' => floatval($this->amount),
 			'tip' => $this->tip,
 			'type' => $this->type
 		];

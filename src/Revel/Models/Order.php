@@ -18,19 +18,21 @@ class Order extends SendableModel {
 			'skin' => $this->raw('skin', 'weborder'),
 			'establishmentId' => $this->raw('establishmentId', null),
 			'items' => $this->raw('items', []),
-			'orderInfo' => $this->raw('orderInfo', OrderInfo::one($this->revel)),
-			'paymentInfo' => $this->raw('paymentInfo', PaymentInfo::one($this->revel))
+			'orderInfo' => $this->raw('orderInfo', null),
+			'paymentInfo' => $this->raw('paymentInfo', null)
 		];
 	}
 
 	public function bundle() {
-		return [
+		return array_filter([
 			'skin' => $this->skin,
 			'establishment' => $this->establishmentId,
 			'items' => array_map(function(OrderItem $item) { return $item->bundle(); }, $this->items),
-			'orderInfo' => $this->orderInfo->bundle(),
-			'paymentInfo' => $this->paymentInfo->bundle()
-		];
+			'orderInfo' => empty($this->orderInfo) ? null : $this->orderInfo->bundle(),
+			'paymentInfo' => empty($this->paymentInfo) ? null : $this->paymentInfo->bundle()
+		], function($value) {
+			return !empty($value);
+		});
 	}
 
 }
