@@ -39,5 +39,5 @@ $order = Order::one($revel, [
 ]);
 
 print_r(array_map(function(Product $product) {
-	return $product->raw();
+	return $product->data();
 }, $revel->products()->all()));
