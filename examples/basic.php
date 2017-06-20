@@ -28,16 +28,11 @@ $order = Order::one($revel, [
 		])
 	],
 	'orderInfo' => OrderInfo::one($revel, [
-		'customer' => Customer::one($revel, [
-			'phone' => '0400000000',
-			'email' => 'test@test.com'
-		])
+
 	]),
 	'paymentInfo' => PaymentInfo::one($revel, [
 		'amount' => 15
 	])
 ]);
 
-print_r(array_map(function(Product $product) {
-	return $product->data();
-}, $revel->products()->all()));
+print_r($order->bundle());

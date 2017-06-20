@@ -19,17 +19,19 @@ class OrderInfo extends SendableModel {
 			'created' => $this->raw('created', new DateTime()),
 			'diningOption' => $this->raw('diningOption', DiningOptions::ONLINE),
 			'asap' => $this->raw('asap', false),
-			'customer' => $this->raw('customer', Customer::one($this->revel))
+			'customer' => $this->raw('customer', null)
 		];
 	}
 
 	public function bundle() {
-		return [
-			'created_date' => $this->created->format('Y-m-d H:i:s'),
+		return array_filter([
+			'created_date' => empty($this->created) ? null : $this->created->format('Y-m-d H:i:s'),
 			'dining_option' => $this->diningOption,
 			'asap' => $this->asap,
-			'customer' => $this->customer->bundle()
-		];
+			'customer' => empty($this->customer) ? null : $this->customer->bundle()
+		], function($value) {
+			return !empty($value);
+		});
 	}
 
 }
