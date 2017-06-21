@@ -6,6 +6,7 @@ use Revel\Api\Categories;
 use Revel\Api\Establishments;
 use Revel\Api\Ordering;
 use Revel\Api\Products;
+use Revel\Api\Discounts;
 
 class Revel {
 
@@ -106,6 +107,13 @@ class Revel {
 	 */
 	public function ordering() {
 		return $this->_provider(Ordering::class);
+	}
+
+	/**
+	 * @return Discounts
+	 */
+	public function discounts() {
+		return $this->_provider(Discounts::class);
 	}
 
 }

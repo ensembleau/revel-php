@@ -13,26 +13,11 @@ use Revel\Models\OrderInfo;
 use Revel\Models\Customer;
 use Revel\Models\Category;
 use Revel\Models\Product;
+use Revel\Models\Discount;
 
 $env = new Dotenv(realpath(__DIR__ . '/../'));
 $env->load();
 
 $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 
-$order = Order::one($revel, [
-	'establishmentId' => 1,
-	'items' => [
-		OrderItem::one($revel, [
-			'price' => 16,
-			'productId' => 85
-		])
-	],
-	'orderInfo' => OrderInfo::one($revel, [
-
-	]),
-	'paymentInfo' => PaymentInfo::one($revel, [
-		'amount' => 15
-	])
-]);
-
-print_r($order->bundle());
+print_r(array_map(function(Discount $discount) { return $discount->data(); }, $revel->discounts()->all()));
