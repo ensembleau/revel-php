@@ -10,7 +10,9 @@ use Revel\Utils;
  * @property-read string $name
  * @property-read string $barcode
  * @property-read int $establishmentId
- * @property-read bool $available
+ * @property-read int $categoryId
+ * @property-read float $price
+ * @property-read bool $active
  *
  * @author Marty Wallace
  */
@@ -23,7 +25,9 @@ class Product extends Model {
 			'name' => $this->raw('name'),
 			'barcode' => $this->raw('barcode'),
 			'establishmentId' => Utils::extractId($this->raw('establishment')),
-			'available' => $this->raw('available')
+			'categoryId' => Utils::extractId($this->raw('category')),
+			'price' => $this->raw('price', 0),
+			'active' => $this->raw('active', false)
 		];
 	}
 
@@ -32,6 +36,13 @@ class Product extends Model {
 	 */
 	public function establishment() {
 		return $this->revel->establishments()->findById($this->establishmentId);
+	}
+
+	/**
+	 * @return Category
+	 */
+	public function category() {
+		return $this->revel->categories()->findById($this->categoryId);
 	}
 
 }

@@ -17,9 +17,9 @@ class OrderItem extends SendableModel {
 
 	public function bundle() {
 		return [
-			'price' => $this->price,
-			'product' => $this->productId,
-			'quantity' => $this->quantity
+			'price' => floatval($this->price),
+			'product' => intval($this->productId),
+			'quantity' => intval($this->quantity)
 		];
 	}
 

@@ -16,7 +16,7 @@ class OrderInfo extends SendableModel {
 
 	protected function fields() {
 		return [
-			'created' => $this->raw('created', new DateTime()),
+			'created' => $this->raw('created', null),
 			'diningOption' => $this->raw('diningOption', DiningOptions::ONLINE),
 			'asap' => $this->raw('asap', false),
 			'customer' => $this->raw('customer', null)

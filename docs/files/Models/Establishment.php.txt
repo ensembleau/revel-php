@@ -21,8 +21,26 @@ class Establishment extends Model {
 			'name' => $this->raw('name'),
 			'email' => $this->raw('email'),
 			'phone' => $this->raw('phone'),
-			'active' => $this->raw('active')
+			'active' => $this->raw('active', false)
 		];
+	}
+
+	/**
+	 * @return Category[]
+	 */
+	public function categories() {
+		return array_values(array_filter($this->revel->categories()->all(), function(Category $category) {
+			return $category->establishment()->id === $this->id;
+		}));
+	}
+
+	/**
+	 * @return Product[]
+	 */
+	public function products() {
+		return array_values(array_filter($this->revel->products()->all(), function(Product $product) {
+			return $product->establishment()->id === $this->id;
+		}));
 	}
 
 }
