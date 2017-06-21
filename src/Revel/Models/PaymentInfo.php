@@ -1,12 +1,14 @@
 <?php namespace Revel\Models;
 
+use Revel\Models\Contracts\Sendable;
+
 /**
  * @property string|int $transactionId
  * @property int $amount
  * @property int $tip
  * @property int $type
  */
-class PaymentInfo extends SendableModel {
+class PaymentInfo extends Model implements Sendable {
 
 	protected function fields() {
 		return [

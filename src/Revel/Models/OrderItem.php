@@ -1,11 +1,13 @@
 <?php namespace Revel\Models;
 
+use Revel\Models\Contracts\Sendable;
+
 /**
  * @property int $price
  * @property int $productId
  * @property int $quantity
  */
-class OrderItem extends SendableModel {
+class OrderItem extends Model implements Sendable {
 
 	protected function fields() {
 		return [

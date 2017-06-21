@@ -1,5 +1,7 @@
 <?php namespace Revel\Models;
 
+use Revel\Models\Contracts\Sendable;
+
 /**
  * @property string $skin
  * @property int $establishmentId
@@ -11,7 +13,7 @@
  * @see PaymentInfo
  * @see OrderItem
  */
-class Order extends SendableModel {
+class Order extends Model implements Sendable {
 
 	protected function fields() {
 		return [

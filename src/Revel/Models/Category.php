@@ -1,4 +1,5 @@
 <?php namespace Revel\Models;
+use Revel\Models\Contracts\BelongsToEstablishment;
 use Revel\Utils;
 
 /**
@@ -7,7 +8,7 @@ use Revel\Utils;
  * @property-read bool $active
  * @property-read int $establishmentId
  */
-class Category extends Model {
+class Category extends Model implements BelongsToEstablishment {
 
 	protected function fields() {
 		return [

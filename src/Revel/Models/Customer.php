@@ -1,12 +1,14 @@
 <?php namespace Revel\Models;
 
+use Revel\Models\Contracts\Sendable;
+
 /**
  * @property string $phone
  * @property string $email
  * @property string $first
  * @property string $last
  */
-class Customer extends SendableModel {
+class Customer extends Model implements Sendable {
 
 	protected function fields() {
 		return [

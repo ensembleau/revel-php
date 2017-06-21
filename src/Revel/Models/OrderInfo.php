@@ -2,6 +2,7 @@
 
 use DateTime;
 use Revel\Enums\DiningOptions;
+use Revel\Models\Contracts\Sendable;
 
 /**
  * @property DateTime $created
@@ -12,7 +13,7 @@ use Revel\Enums\DiningOptions;
  * @see DiningOptions
  * @see Customer
  */
-class OrderInfo extends SendableModel {
+class OrderInfo extends Model implements Sendable {
 
 	protected function fields() {
 		return [

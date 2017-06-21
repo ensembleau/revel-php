@@ -1,5 +1,6 @@
 <?php namespace Revel\Models;
 
+use Revel\Models\Contracts\BelongsToEstablishment;
 use Revel\Utils;
 
 /**
@@ -16,7 +17,7 @@ use Revel\Utils;
  *
  * @author Marty Wallace
  */
-class Product extends Model {
+class Product extends Model implements BelongsToEstablishment {
 
 	protected function fields() {
 		return [
