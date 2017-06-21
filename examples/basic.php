@@ -8,6 +8,7 @@ use Dotenv\Dotenv;
 use Revel\Revel;
 use Revel\Models\Order;
 use Revel\Models\OrderItem;
+use Revel\Models\OrderItemModifier;
 use Revel\Models\PaymentInfo;
 use Revel\Models\OrderInfo;
 use Revel\Models\Customer;
@@ -21,4 +22,19 @@ $env->load();
 
 $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 
-print_r(array_map(function(Modifier $modifier) { return $modifier->data(); }, $revel->modifiers()->all()));
+$order = Order::one($revel, []);
+$order->items = [
+	OrderItem::one($revel, [
+		'productId' => 91,
+		'price' => 15,
+		'modifiers' => [
+			OrderItemModifier::one($revel, [
+				'modifierId' => 12
+			])
+		]
+	])
+];
+
+print_r($order->bundle());
+
+// print_r(array_map(function(Modifier $modifier) { return $modifier->data(); }, $revel->modifiers()->all()));

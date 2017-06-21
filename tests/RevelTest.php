@@ -6,7 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Revel\Revel;
 use Revel\Models\Order;
 use Revel\Models\OrderItem;
-use Revel\Enums\DiningOptions;
+use Revel\Models\OrderItemModifier;
+use Revel\Models\OrderInfo;
+use Revel\Models\PaymentInfo;
 use Dotenv\Dotenv;
 
 try {
@@ -119,6 +121,34 @@ class RevelTest extends TestCase {
 
 		$this->assertEquals($product->category()->id, 14);
 		$this->assertEquals($product->category()->name, $category->name);
+	}
+
+	/**
+	 * @depends testRevel
+	 * @param Revel $revel
+	 */
+	public function testSubmitOrder(Revel $revel) {
+		$order = Order::one($revel, [
+			'establishmentId' => 1,
+			'orderInfo' => OrderInfo::one($revel, []),
+			'paymentInfo' => PaymentInfo::one($revel, [
+				'transactionId' => uniqid(),
+				'amount' => 15
+			]),
+			'items' => [
+				OrderItem::one($revel, [
+					'productId' => 91,
+					'price' => 15,
+					'modifiers' => [
+						OrderItemModifier::one($revel, [
+							'modifierId' => 12
+						])
+					]
+				])
+			]
+		]);
+
+		$this->assertNotNull($revel->ordering()->submit($order));
 	}
 
 }

@@ -1,20 +1,19 @@
 <?php namespace Revel\Models;
 
 use Revel\Models\Contracts\BelongsToEstablishment;
-use Revel\Models\Contracts\Sendable;
 use Revel\Utils;
 
 /**
- * @property int $id
- * @property bool $active
- * @property int $establishmentId
- * @property string $name
- * @property string $uuid
- * @property string $barcode
- * @property string $description
- * @property float $price
+ * @property-read int $id
+ * @property-read bool $active
+ * @property-read int $establishmentId
+ * @property-read string $name
+ * @property-read string $uuid
+ * @property-read string $barcode
+ * @property-read string $description
+ * @property-read float $price
  */
-class Modifier extends Model implements Sendable, BelongsToEstablishment {
+class Modifier extends Model implements BelongsToEstablishment {
 
 	protected function fields() {
 		return [
@@ -27,10 +26,6 @@ class Modifier extends Model implements Sendable, BelongsToEstablishment {
 			'description' => $this->raw('description'),
 			'price' => $this->raw('price')
 		];
-	}
-
-	public function bundle() {
-		return [];
 	}
 
 	/**
