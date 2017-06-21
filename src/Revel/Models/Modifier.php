@@ -4,6 +4,16 @@ use Revel\Models\Contracts\BelongsToEstablishment;
 use Revel\Models\Contracts\Sendable;
 use Revel\Utils;
 
+/**
+ * @property int $id
+ * @property bool $active
+ * @property int $establishmentId
+ * @property string $name
+ * @property string $uuid
+ * @property string $barcode
+ * @property string $description
+ * @property float $price
+ */
 class Modifier extends Model implements Sendable, BelongsToEstablishment {
 
 	protected function fields() {
@@ -12,7 +22,9 @@ class Modifier extends Model implements Sendable, BelongsToEstablishment {
 			'active' => $this->raw('active', false),
 			'establishmentId' => Utils::extractId($this->raw('establishment')),
 			'name' => $this->raw('name'),
+			'uuid' => $this->raw('uuid'),
 			'barcode' => $this->raw('barcode'),
+			'description' => $this->raw('description'),
 			'price' => $this->raw('price')
 		];
 	}
