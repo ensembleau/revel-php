@@ -14,10 +14,11 @@ use Revel\Models\Customer;
 use Revel\Models\Category;
 use Revel\Models\Product;
 use Revel\Models\Discount;
+use Revel\Models\Modifier;
 
 $env = new Dotenv(realpath(__DIR__ . '/../'));
 $env->load();
 
 $revel = new Revel(getenv('domain'), getenv('secret'), getenv('key'));
 
-print_r(array_map(function(Discount $discount) { return $discount->data(); }, $revel->discounts()->all()));
+print_r(array_map(function(Modifier $modifier) { return $modifier->data(); }, $revel->modifiers()->all()));

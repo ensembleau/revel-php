@@ -4,6 +4,7 @@ use GuzzleHttp\Client;
 use Revel\Api\Api;
 use Revel\Api\Categories;
 use Revel\Api\Establishments;
+use Revel\Api\Modifiers;
 use Revel\Api\Ordering;
 use Revel\Api\Products;
 use Revel\Api\Discounts;
@@ -114,6 +115,13 @@ class Revel {
 	 */
 	public function discounts() {
 		return $this->_provider(Discounts::class);
+	}
+
+	/**
+	 * @return Discounts
+	 */
+	public function modifiers() {
+		return $this->_provider(Modifiers::class);
 	}
 
 }
