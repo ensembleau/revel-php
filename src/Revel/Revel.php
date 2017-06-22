@@ -118,7 +118,7 @@ class Revel {
 	}
 
 	/**
-	 * @return Discounts
+	 * @return Modifiers
 	 */
 	public function modifiers() {
 		return $this->_provider(Modifiers::class);
