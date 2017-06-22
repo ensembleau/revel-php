@@ -23,7 +23,7 @@ class OrderItemModifier extends Model implements Sendable {
 			'qty' => $this->quantity,
 			'price' => $this->price
 		], function($value) {
-			return !empty($value);
+			return $value !== null;
 		});
 	}
 

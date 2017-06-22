@@ -28,7 +28,7 @@ class OrderItem extends Model implements Sendable {
 				return $modifier->bundle();
 			}, $this->modifiers)
 		], function($value) {
-			return !empty($value);
+			return $value !== null;
 		});
 	}
 

@@ -33,7 +33,7 @@ class Order extends Model implements Sendable {
 			'orderInfo' => empty($this->orderInfo) ? null : $this->orderInfo->bundle(),
 			'paymentInfo' => empty($this->paymentInfo) ? null : $this->paymentInfo->bundle()
 		], function($value) {
-			return !empty($value);
+			return $value !== null;
 		});
 	}
 

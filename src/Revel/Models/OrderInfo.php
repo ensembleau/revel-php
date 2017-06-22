@@ -31,7 +31,7 @@ class OrderInfo extends Model implements Sendable {
 			'asap' => $this->asap,
 			'customer' => empty($this->customer) ? null : $this->customer->bundle()
 		], function($value) {
-			return !empty($value);
+			return $value !== null;
 		});
 	}
 
